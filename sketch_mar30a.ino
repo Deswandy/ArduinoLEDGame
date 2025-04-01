@@ -62,7 +62,7 @@ void loop() {
     }
   } else { //player is idle and hasnt started game
     int potValue = analogRead(potPin); //analog input from potentiometer
-    shiftDelay = map(potValue, 0, 1023, 1000, 2000); //takes the information from ADC and maps it into speed of the LED shifting, increasing the difficulty of the game
+    shiftDelay = map(potValue, 0, 1023, 50, 500); //takes the information from ADC and maps it into speed of the LED shifting, increasing the difficulty of the game
     adjustColorBasedOnSpeed(); //color goes from none to white for difficulty indicator
     gameIdle(); //blinks the led before starting the game
   }
@@ -222,14 +222,12 @@ bool checkButtonPress() {
 }
 
 void adjustColorBasedOnSpeed() {
-  int normalizedSpeed = map(shiftDelay, 1000, 2000, 0, 255);
+  int normalizedSpeed = map(shiftDelay, 50, 500, 0, 255);
 
-  int red = map(normalizedSpeed, 0, 255, 0, 255);   // Increase from 0 to 255
-  int green = map(normalizedSpeed, 0, 255, 0, 255); // Keep green at 0
-  int blue = map(normalizedSpeed, 0, 255, 0, 255);  // Decrease from 255 to 0
+  int rgb = map(normalizedSpeed, 0, 255, 0, 255);   
 
-  analogWrite(redPin, red);
-  analogWrite(greenPin, green);
-  analogWrite(bluePin, blue);
+  analogWrite(redPin, rgb);
+  analogWrite(greenPin, rgb);
+  analogWrite(bluePin, rgb);
 }
 
